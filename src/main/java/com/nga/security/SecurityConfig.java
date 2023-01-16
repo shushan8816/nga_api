@@ -36,8 +36,13 @@ public class SecurityConfig {
                         "/webjars/**",
                         "/swagger-resources/**",
                         "/v3/api-docs/**",
+                        "/user/all").permitAll()
+                .antMatchers(HttpMethod.POST,
+                        "/user",
+                        "/auth/login",
+                        "/forgot-password",
+                        "/reset-password",
                         "/user").permitAll()
-                .antMatchers(HttpMethod.POST, "/user", "/auth/login").permitAll()
                 .antMatchers(HttpMethod.PATCH, "/user/password").permitAll()
                 .anyRequest()
                 .authenticated();

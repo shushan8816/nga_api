@@ -1,16 +1,19 @@
 package com.nga.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nga.enums.UserStatus;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
-
 
 @Getter
 @Setter
+@ToString
 @Entity
 public class User {
 
@@ -32,9 +35,10 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(unique = true)
+    @JsonIgnore
     private String verificationCode;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserStatus status;
 
@@ -42,30 +46,26 @@ public class User {
     @JoinColumn(nullable = false)
     private Authority authority;
 
+    @JsonIgnore
+    @Column(unique = true)
+    private String resetPasswordToken;
+
+    @JsonIgnore
+    private Long resetPasswordExpiredTime;
+
+    @JsonIgnore
+    private Long verificationCodeExpiredTime;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return getId() == user.getId() && Objects.equals(getFirstName(), user.getFirstName()) && Objects.equals(getLastName(), user.getLastName()) && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getPassword(), user.getPassword()) && Objects.equals(getVerificationCode(), user.getVerificationCode()) && getStatus() == user.getStatus() && Objects.equals(getAuthority(), user.getAuthority());
+        return getId() == user.getId() && Objects.equals(getFirstName(), user.getFirstName()) && Objects.equals(getLastName(), user.getLastName()) && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getPassword(), user.getPassword()) && Objects.equals(getVerificationCode(), user.getVerificationCode()) && getStatus() == user.getStatus() && Objects.equals(getAuthority(), user.getAuthority()) && Objects.equals(getResetPasswordToken(), user.getResetPasswordToken()) && Objects.equals(getResetPasswordExpiredTime(), user.getResetPasswordExpiredTime()) && Objects.equals(getVerificationCodeExpiredTime(), user.getVerificationCodeExpiredTime());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFirstName(), getLastName(), getEmail(), getPassword(), getVerificationCode(), getStatus(), getAuthority());
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", verificationCode='" + verificationCode + '\'' +
-                ", status=" + status +
-                ", authority=" + authority +
-                '}';
+        return Objects.hash(getId(), getFirstName(), getLastName(), getEmail(), getPassword(), getVerificationCode(), getStatus(), getAuthority(), getResetPasswordToken(), getResetPasswordExpiredTime(), getVerificationCodeExpiredTime());
     }
 }

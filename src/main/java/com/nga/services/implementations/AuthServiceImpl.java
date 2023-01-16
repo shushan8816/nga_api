@@ -34,7 +34,7 @@ public class AuthServiceImpl implements AuthService {
         int userId;
 
         email = request.getEmail();
-        User user = userService.getByEmail(email, UserStatus.ENABLE);
+        User user = userService.findByEmail(email, UserStatus.ENABLE);
 
         if (user == null) {
             throw new NotFoundException("User with current email:" + email + " is not found");
@@ -59,7 +59,6 @@ public class AuthServiceImpl implements AuthService {
         response.put("refreshToken", refreshToken);
 
         return response;
-
     }
 }
 

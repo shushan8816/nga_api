@@ -7,8 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Data
-public class ResendVerificationCodeRequest {
-
+public class ResetPasswordRequest {
     @NotBlank
     @Email
     private String email;
@@ -18,7 +17,7 @@ public class ResendVerificationCodeRequest {
     private String password;
 
     @NotBlank
-    private String verificationCode;
+    private String resetToken;
 
-    private Long verificationCodeExpiredTime;
+    private Long resetPasswordExpiredTime;
 }

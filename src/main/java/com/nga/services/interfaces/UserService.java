@@ -1,12 +1,12 @@
 package com.nga.services.interfaces;
 
 
-import com.nga.dto.request.ChangePasswordRequest;
-import com.nga.dto.request.UpdateUserRequest;
+import com.nga.dto.request.*;
 import com.nga.enums.UserStatus;
 import com.nga.models.User;
 import com.nga.utils.exceptions.BadRequestException;
 import com.nga.utils.exceptions.DuplicateDataException;
+import com.nga.utils.exceptions.InternalErrorException;
 import com.nga.utils.exceptions.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,11 +18,9 @@ public interface UserService {
 
     User getById(int id) throws NotFoundException;
 
-    User getByEmail(String email, UserStatus status);
+    User findByEmail(String email, UserStatus status);
 
-    boolean existsByVerificationCode( String verificationCode);
-
-    List<User> getAllUsers();
+    List<User> getAll();
 
     Page<User> getAllWithPagination(Pageable pageable);
 
@@ -34,6 +32,14 @@ public interface UserService {
 
     void delete(int id) throws NotFoundException;
 
-    User verifyAndChangePassword(ChangePasswordRequest request) throws NotFoundException;
+    boolean existsByVerificationCode(String verificationCode);
+
+    void resendPassword(ResetPasswordRequest request) throws NotFoundException, DuplicateDataException, InternalErrorException;
+
+    void forgotPassword(ForgotPasswordRequest request) throws NotFoundException, DuplicateDataException, InternalErrorException;
+
+    User verifyUser(VerifyUserRequest request) throws NotFoundException, InternalErrorException;
+
+    void resendVerificationCode(ResendVerificationCodeRequest request) throws NotFoundException, InternalErrorException;
 
 }

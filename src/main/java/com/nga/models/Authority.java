@@ -18,7 +18,7 @@ public class Authority {
     private int id;
 
     @NotNull
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String role;
 
     @Override
