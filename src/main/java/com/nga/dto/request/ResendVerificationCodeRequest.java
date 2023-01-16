@@ -14,7 +14,7 @@ public class ChangePasswordRequest {
     private String email;
 
     @NotBlank
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!\"#$%&'()*+,-./:;<=>?@\\[\\]^_`{|}~\\\\])(?=\\S+$).{8,32}$")
+//    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!\"#$%&'()*+,-./:;<=>?@\\[\\]^_`{|}~\\\\])(?=\\S+$).{8,32}$")
     private String password;
 
     @NotBlank
